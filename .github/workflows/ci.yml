@@ -1,0 +1,42 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your code
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Set up Python (for running tests directly on the code)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. Install backend dependencies
+      - name: Install backend dependencies
+        working-directory: project-backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          # if you use pytest:
+          pip install pytest
+
+      # 4. Run tests (adjust command if you use something else)
+      - name: Run backend tests
+        working-directory: project-backend
+        run: |
+          pytest
+
+      # 5. Build Docker image for the backend
+      - name: Build Docker image
+        working-directory: project-backend
+        run: |
+          docker build -t my-flask-api:ci .

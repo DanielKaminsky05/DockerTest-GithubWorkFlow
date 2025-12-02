@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frontend + Flask API</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      font-size: 18px;
+      color: purple;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Frontend → Flask API (Docker)</h1>
+
+  <button id="callBtn">Call Backend</button>
+
+  <div id="output"></div>
+
+  <script>
+    document.getElementById("callBtn").onclick = async function () {
+      try {
+        const res = await fetch("http://localhost:5000/api/hello");
+        const data = await res.json();
+        document.getElementById("output").textContent = data.message;
+      } catch (err) {
+        document.getElementById("output").textContent = "Error: " + err;
+      }
+    };
+  </script>
+
+</body>
+</html>
