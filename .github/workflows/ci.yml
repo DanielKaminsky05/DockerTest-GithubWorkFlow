@@ -20,16 +20,6 @@ jobs:
         with:
           python-version: "3.12"
 
-      # 3. Install backend dependencies
-      - name: Run backend tests (skip if no tests)
-        working-directory: project-backend
-        run: |
-          if [ -d tests ] && [ "$(ls -A tests)" ]; then
-            echo "Running pytest..."
-            pytest
-          else
-            echo "No tests found, skipping pytest."
-          fi
 
       # 4. Run tests (adjust command if you use something else)
       - name: Run backend tests
